@@ -1,0 +1,20 @@
+{
+	"name": "antigravity-api",
+	"version": "1.0.0",
+	"scripts": {
+		"start:dev": "tsnd --ignore-watch node_modules/ --cls --cache-directory temp/ --transpile-only --quiet src/server.ts"
+	},
+	"devDependencies": {
+		"@types/node": "^17.0.36",
+		"ts-node": "^10.8.0",
+		"ts-node-dev": "^2.0.0",
+		"typescript": "^4.7.2"
+	},
+	"dependencies": {
+		"dotenv": "^16.0.1",
+		"fastify": "^3.29.0",
+		"mongodb": "^4.6.0",
+		"reflect-metadata": "^0.1.13",
+		"typeorm": "^0.3.6"
+	}
+}
