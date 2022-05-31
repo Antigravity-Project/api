@@ -6,7 +6,7 @@ const routeUsers: RouteOptions[] = [
         url: "/users/:id",
         method: "GET",
         //@ts-ignore
-        handler: UserController.getUsers
+        handler: UserController.getUsers,
     },
     {
         url: "/users",

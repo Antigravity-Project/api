@@ -4,7 +4,7 @@ import { UserService } from "../service/user-service";
 
 export class UserController {
     static async getUsers(req: FastifyRequest<{ Params: { id: string } }>, res: FastifyReply) {
-        const user = await UserService.getUserOnDB(req.params.id);
+        const user = await UserService.get(req.params.id);
 
         if (!user) {
             return res
@@ -16,6 +16,24 @@ export class UserController {
     }
 
     static async createUser(req: FastifyRequest<{ Body: User }>, res: FastifyReply) {
-        return await UserService.createUser(req.body);
+        const { 
+            id,
+            betCooldown,
+            blockList,
+            coin,
+            dailyCooldown,
+            engines,
+            profile 
+        } = req.body;
+
+        return await UserService.create({
+            id,
+            betCooldown,
+            blockList,
+            coin,
+            dailyCooldown,
+            engines,
+            profile
+        });
     }
 }

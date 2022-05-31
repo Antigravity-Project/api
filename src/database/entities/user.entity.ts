@@ -1,5 +1,4 @@
-import { Entity, Column } from "typeorm";
-import { BaseEntity } from "./base.entity";
+import { Entity, Column, ObjectIdColumn } from "typeorm";
 
 class SubEntityblockList {
     @Column()
@@ -24,18 +23,27 @@ class Engines {
 }
 
 class Profile {
-	@Column({ default: () => [] })
-	backgrounds: string[];
+	@Column()
+	backgrounds: string[] = [];
 
-	@Column({
-		default: () => "Você sabia que pode alterar esta mensagem?",
-	})
-	aboutMe: string;
+	@Column()
+	aboutMe: string = "Você sabia que pode alterar esta mensagem?";
+
+	constructor(options?: Profile) {
+		if (options) {
+			for (const key of Object.keys(options)) {
+				if (options[key]) this[key] = options[key];
+			}
+		}
+	}
 }
 
 @Entity("users")
-export class User extends BaseEntity {
-    @Column((type) => SubEntityblockList)
+export class User {
+	@ObjectIdColumn({ name: "_id", unique: true })
+    id: string;
+	
+    @Column(() => SubEntityblockList)
     blockList: SubEntityblockList;
 
     @Column()
@@ -44,21 +52,20 @@ export class User extends BaseEntity {
     @Column()
     dailyCooldown: number = 0;
 
-    @Column((type) => Profile)
-    profile: Profile;
+    @Column(() => Profile)
+    profile: Profile = new Profile();
 
-    @Column((type) => Engines)
+    @Column(() => Engines)
     engines: Engines;
     
     @Column()
     betCooldown: number = 0;
 
-    @Column()
-	globalBan: boolean;
+	constructor(userOptions: User) {
+		if (!userOptions) return;
 
-	constructor(id: string) {
-		super();
-
-		this._id = id;
+		for (const key of Object.keys(userOptions)) {
+			if (userOptions[key]) this[key] = userOptions[key];
+		}
 	}
 }
