@@ -40,11 +40,11 @@ class Profile {
 
 @Entity("users")
 export class User {
-	@ObjectIdColumn({ name: "_id", unique: true })
-    id: string;
+	@ObjectIdColumn({ name: "_id" })
+    _id: string;
 	
     @Column(() => SubEntityblockList)
-    blockList: SubEntityblockList;
+    blockList?: SubEntityblockList;
 
     @Column()
     coin: number = 0;
@@ -56,7 +56,7 @@ export class User {
     profile: Profile = new Profile();
 
     @Column(() => Engines)
-    engines: Engines;
+    engines?: Engines;
     
     @Column()
     betCooldown: number = 0;

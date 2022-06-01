@@ -1,9 +1,6 @@
-import { FastifyReply, FastifyRequest, HookHandlerDoneFunction } from "fastify";
-import { verify } from "jsonwebtoken";
+import { FastifyReply, FastifyRequest } from "fastify";
 
-import { secret } from "../config/auth.json";
 import { HttpStatusCode } from "../enums/http-status";
-
 export const authentication = async (req: FastifyRequest, res: FastifyReply) => {
     if (!req.headers["authorization"]) {
         return res
@@ -24,15 +21,13 @@ export const authentication = async (req: FastifyRequest, res: FastifyReply) => 
             });
     }
 
-    const token = req.headers["authorization"].split(" ")[0];
+    const token = req.headers["authorization"].split(" ")[1];
 
-    verify(token, secret, (err) => {
-        if (err) {
-            return res
+    if (token !== process.env.SECRET_KEY) {
+        return res
                 .status(HttpStatusCode.UNAUTHORIZED)
                 .send({
                     message: "Invalid token."
                 });
-        }
-    });
+    }
 }
