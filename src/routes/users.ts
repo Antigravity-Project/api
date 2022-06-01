@@ -5,13 +5,17 @@ const routeUsers: RouteOptions[] = [
     {
         url: "/users/:id",
         method: "GET",
-        //@ts-ignore
         handler: UserController.getUsers,
     },
     {
         url: "/users",
         method: "POST",
         handler: UserController.createUser,
+    },
+    {
+        url: "/users/:id",
+        method: "DELETE",
+        handler: UserController.deleteUser,
     }
 ];
 

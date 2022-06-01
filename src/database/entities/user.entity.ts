@@ -29,7 +29,7 @@ class Profile {
 	@Column()
 	aboutMe: string = "Você sabia que pode alterar esta mensagem?";
 
-	constructor(options?: Profile) {
+	constructor(options?: Omit<Profile, "backgrounds">) {
 		if (options) {
 			for (const key of Object.keys(options)) {
 				if (options[key]) this[key] = options[key];
@@ -63,9 +63,6 @@ export class User {
 
 	constructor(userOptions: User) {
 		if (!userOptions) return;
-
-		for (const key of Object.keys(userOptions)) {
-			if (userOptions[key]) this[key] = userOptions[key];
-		}
+		Object.assign(this, userOptions);
 	}
 }

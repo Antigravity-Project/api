@@ -36,4 +36,8 @@ export class UserController {
             profile
         });
     }
+
+    static async deleteUser(req: FastifyRequest<{ Params: { id: string } }>, res: FastifyReply) {
+        return await UserService.delete(req.params.id);
+    }
 }

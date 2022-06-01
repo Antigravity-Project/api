@@ -11,12 +11,20 @@ export class UserService {
     }
 
     static async create(userOptions: User) {
-        if (await this.users.findOneBy({ id: userOptions.id }))
-            throw {
+        const userAlreadyExists = await this.users.findOneBy({ id: userOptions.id })
+        
+        if (userAlreadyExists) {
+            return {
                 message: "User already exists",
                 code: ApiStatusEnum.USER_EXIST,
             }
+        }
+            
         const user = new User(userOptions);
         return this.users.save(user);
+    }
+
+    static async delete(id: string) {
+        return await this.users.deleteOne({ id });
     }
 }
